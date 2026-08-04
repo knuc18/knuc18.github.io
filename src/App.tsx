@@ -20,7 +20,7 @@ const STATS = [
 const EXPERIENCE = [
   {
     range: 'Feb 2023 — Present',
-    title: 'Associate Director',
+    title: 'Technology Consulting Manager',
     org: 'SGV & Co.',
     sub: 'EY Philippines',
     body: 'Technical Architect & Low-code Manager — leading delivery teams, architecture and project management for enterprise clients.',
@@ -119,20 +119,7 @@ function App() {
       gapColor="auto"
       style={{ height: '100vh', width: '100%', background: 'var(--surface-page)' }}
     >
-      <div
-        style={{
-          position: 'sticky',
-          top: 0,
-          zIndex: 10,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          gap: 24,
-          padding: '22px 44px',
-          background: 'var(--surface-page)',
-          borderBottom: 'var(--border-w) solid var(--border-color)',
-        }}
-      >
+      <div className="site-nav">
         <span
           style={{
             fontFamily: 'var(--font-primary)',
@@ -144,7 +131,7 @@ function App() {
         >
           KEVIN NUCUM
         </span>
-        <div style={{ display: 'flex', gap: 28, fontSize: 14 }}>
+        <div className="nav-links">
           {NAV_LINKS.map(([label, href]) => (
             <a key={href} href={href} style={{ color: 'var(--text-muted)', textDecoration: 'none' }}>
               {label}
@@ -158,7 +145,7 @@ function App() {
         </div>
       </div>
 
-      <div style={{ padding: '64px 44px', maxWidth: 1100, margin: '0 auto' }}>
+      <div className="page-content">
         <span className="op-kicker">Software Developer · AI Automation · Consulting</span>
         <h1 className="op-display" style={{ margin: '16px 0 8px' }}>
           Kevin Nucum
@@ -187,7 +174,7 @@ function App() {
           </a>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16, marginBottom: 96 }}>
+        <div className="grid-4" style={{ marginBottom: 96 }}>
           {STATS.map(([num, lbl]) => (
             <div key={lbl} className="op-stat">
               <div className="num">{num}</div>
@@ -220,7 +207,7 @@ function App() {
           <h2 className="op-heading" style={{ margin: '8px 0 24px' }}>
             Selected client work
           </h2>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 16 }}>
+          <div className="grid-2">
             {PROJECTS.map((p) => (
               <div key={p.title} className="op-card">
                 <span className="op-kicker">{p.org}</span>
@@ -244,7 +231,7 @@ function App() {
 
         <section id="skills" style={{ marginBottom: 96 }}>
           <span className="op-kicker">03 / Skills & Education</span>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 16, margin: '24px 0' }}>
+          <div className="grid-4" style={{ margin: '24px 0' }}>
             {SKILLS.map(([cat, items]) => (
               <div key={cat} className="op-card">
                 <h3 className="op-heading" style={{ fontSize: 18, marginBottom: 12 }}>
@@ -269,7 +256,7 @@ function App() {
 
         <section id="certs" style={{ marginBottom: 96 }}>
           <span className="op-kicker">04 / Certifications</span>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: 16, marginTop: 24 }}>
+          <div className="grid-2" style={{ marginTop: 24 }}>
             {CERTS.map(([title, sub]) => (
               <div key={title} className="op-card">
                 <h3 className="op-heading" style={{ fontSize: 18, marginBottom: 6 }}>
