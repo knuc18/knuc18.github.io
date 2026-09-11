@@ -1,4 +1,5 @@
 import { HexFloat } from './components/canvasui/HexFloat'
+import { ContactForm } from './components/ContactForm'
 import './portfolio.css'
 
 const NAV_LINKS = [
@@ -276,12 +277,27 @@ function App() {
           <p className="op-body" style={{ maxWidth: 560, marginBottom: 24 }}>
             Open to consulting, architecture and AI-automation work — for recruiters and clients alike.
           </p>
-          <div style={{ display: 'flex', gap: 24, flexWrap: 'wrap', alignItems: 'center' }}>
-            <a href="mailto:kjnucum@gmail.com" className="op-btn">
-              kjnucum@gmail.com
+          <ContactForm />
+
+          <div
+            style={{
+              display: 'flex',
+              gap: 24,
+              flexWrap: 'wrap',
+              alignItems: 'center',
+              marginTop: 32,
+            }}
+          >
+            <a href="https://github.com/knuc18" target="_blank" rel="noopener noreferrer">
+              GitHub
             </a>
-            <a href="https://github.com/knuc18">GitHub</a>
-            <a href="https://www.linkedin.com/in/kevin-nucum">LinkedIn</a>
+            <a
+              href="https://www.linkedin.com/in/kevin-nucum"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              LinkedIn
+            </a>
           </div>
         </section>
 

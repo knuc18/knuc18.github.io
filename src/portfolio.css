@@ -674,3 +674,78 @@ html{scroll-behavior:smooth}[data-theme]{transition:background-color .2s var(--e
   .page-content{padding:40px 20px}
   .grid-4,.grid-2{grid-template-columns:1fr}
 }
+
+/* ---------------------------------------------------------------
+   Contact form + form-state styles.
+   Appended last so these declarations win over the earlier blocks.
+   --------------------------------------------------------------- */
+
+:root{
+  /* --accent-ink was referenced by .op-btn, .op-checkbox-box and .op-switch
+     but never defined, so button text fell back to inherited bone (#EAE4D3)
+     on the orange accent: 2.24:1, below WCAG AA even for large text.
+     Defining it against the dark ink gives 6.52:1. Orange is identical in
+     both themes, so one value serves both. */
+  --accent-ink:#14130F;
+  --color-error:#FF6B6B;
+}
+
+[data-theme="light"]{
+  --color-error:#B3261E;
+}
+
+.op-textarea{
+  min-height:120px;
+  line-height:var(--lh-body);
+  resize:vertical;
+}
+
+.op-fielderror,
+.op-formerror{
+  font-size:14px;
+  color:var(--color-error);
+  line-height:1.45;
+}
+
+.op-fielderror::before{
+  /* Trailing whitespace inside content collapses, so space it with margin. */
+  content:"!";
+  font-weight:700;
+  margin-right:6px;
+}
+
+.op-input[aria-invalid="true"]{
+  border-color:var(--color-error);
+}
+
+/* Keyboard focus must be visible on its own, not only as a border-colour
+   shift, which is invisible to anyone who cannot compare against the
+   unfocused state. */
+.op-input:focus-visible,
+.op-btn:focus-visible,
+.op-icon-btn:focus-visible,
+a:focus-visible{
+  outline:3px solid var(--color-accent);
+  outline-offset:3px;
+}
+
+.op-btn:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+  box-shadow:var(--shadow-rest);
+  transform:none;
+}
+
+/* Off-screen rather than display:none so bots still find and fill it. */
+.op-honeypot{
+  position:absolute;
+  left:-9999px;
+  width:1px;
+  height:1px;
+  overflow:hidden;
+}
+
+@media (prefers-reduced-motion:reduce){
+  .op-btn,.op-icon-btn,.op-input{transition:none}
+  .op-btn:hover,.op-icon-btn:hover{transform:none}
+}
