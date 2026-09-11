@@ -499,3 +499,47 @@ a:focus-visible{
   .hero-inner{min-height:560px;padding:40px 20px}
   .hero::after{height:110px}
 }
+
+/* ---------------------------------------------------------------
+   Dotted base band.
+
+   A full-bleed strip at the foot of the page holding the animated
+   dot field behind the contact copy and footer. Full-bleed because
+   .page-content is capped at 1100px, which would crop the field.
+   --------------------------------------------------------------- */
+
+.page-base{position:relative;isolation:isolate}
+
+/* .page-content's own bottom padding would stack with the certifications
+   section's 96px margin and open a dead gap above this band. */
+.page-content{padding-bottom:0}
+
+.dot-wave{
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  width:100%;
+  height:clamp(340px,46vh,560px);
+  z-index:0;
+  pointer-events:none;
+  /* Read by the canvas via getComputedStyle, so the dots track the design
+     tokens instead of repeating the palette in JS. */
+  color:var(--text-body);
+}
+
+.page-base-inner{
+  position:relative;
+  z-index:1;
+  max-width:1100px;
+  margin:0 auto;
+  /* Deep bottom padding is what keeps the field legible: it opens a band of
+     empty page for the dots to occupy, so the wave crest stays below the
+     footer rule instead of running behind body copy. */
+  padding:0 44px clamp(170px,24vh,260px);
+}
+
+@media (max-width:640px){
+  .dot-wave{height:clamp(240px,34vh,340px)}
+  .page-base-inner{padding:0 20px clamp(120px,18vh,170px)}
+}

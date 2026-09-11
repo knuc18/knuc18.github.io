@@ -1,5 +1,6 @@
 import { HexFloat } from './components/canvasui/HexFloat'
 import { ContactForm } from './components/ContactForm'
+import { DotWave } from './components/DotWave'
 import './portfolio.css'
 
 const NAV_LINKS = [
@@ -299,64 +300,73 @@ function App() {
             ))}
           </div>
         </section>
+      </div>
 
-        <section id="contact" style={{ marginBottom: 64 }}>
-          <span className="op-kicker">05 / What's Next</span>
-          <h2 className="op-display" style={{ fontSize: 40, margin: '8px 0 12px' }}>
-            Let's build something.
-          </h2>
-          <p className="op-body" style={{ maxWidth: 560, marginBottom: 24 }}>
-            Tell me what you are trying to build and what is in the way. If I am not the
-            right person for it, I will say so and point you somewhere better.
-          </p>
-          <ContactForm />
+      {/* The foot of the page gets its own full-bleed band so the dot field can
+          run edge to edge; .page-content is capped at 1100px and would crop it.
+          The field sits behind the copy, and the cards and inputs over it keep
+          their solid --surface-card fill, so nothing here is read through dots. */}
+      <div className="page-base">
+        <DotWave />
+        <div className="page-base-inner">
+          <section id="contact">
+            <span className="op-kicker">05 / What's Next</span>
+            <h2 className="op-display" style={{ fontSize: 40, margin: '8px 0 12px' }}>
+              Let's build something.
+            </h2>
+            <p className="op-body" style={{ maxWidth: 560, marginBottom: 24 }}>
+              Tell me what you are trying to build and what is in the way. If I am not the
+              right person for it, I will say so and point you somewhere better.
+            </p>
+            <ContactForm />
 
-          <div
+            <div
+              style={{
+                display: 'flex',
+                gap: 24,
+                flexWrap: 'wrap',
+                alignItems: 'center',
+                marginTop: 32,
+              }}
+            >
+              <a href="https://github.com/knuc18" target="_blank" rel="noopener noreferrer">
+                GitHub
+              </a>
+              <a
+                href="https://www.linkedin.com/in/kevin-nucum"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                LinkedIn
+              </a>
+            </div>
+
+            {/* Recruiters are a real but secondary audience: given a path, not a
+                competing call to action. Deliberately quiet and last. */}
+            <p style={{ color: 'var(--text-muted)', fontSize: 14, marginTop: 24 }}>
+              Recruiting for a role rather than a project?{' '}
+              <a
+                href="https://www.linkedin.com/in/kevin-nucum"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Full background on LinkedIn
+              </a>
+              .
+            </p>
+          </section>
+
+          <footer
             style={{
-              display: 'flex',
-              gap: 24,
-              flexWrap: 'wrap',
-              alignItems: 'center',
-              marginTop: 32,
+              borderTop: 'var(--border-w) solid var(--border-color)',
+              paddingTop: 24,
+              color: 'var(--text-muted)',
+              fontSize: 13,
             }}
           >
-            <a href="https://github.com/knuc18" target="_blank" rel="noopener noreferrer">
-              GitHub
-            </a>
-            <a
-              href="https://www.linkedin.com/in/kevin-nucum"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              LinkedIn
-            </a>
-          </div>
-
-          {/* Recruiters are a real but secondary audience: given a path, not a
-              competing call to action. Deliberately quiet and last. */}
-          <p style={{ color: 'var(--text-muted)', fontSize: 14, marginTop: 24 }}>
-            Recruiting for a role rather than a project?{' '}
-            <a
-              href="https://www.linkedin.com/in/kevin-nucum"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Full background on LinkedIn
-            </a>
-            .
-          </p>
-        </section>
-
-        <footer
-          style={{
-            borderTop: 'var(--border-w) solid var(--border-color)',
-            paddingTop: 24,
-            color: 'var(--text-muted)',
-            fontSize: 13,
-          }}
-        >
-          Designed & built by Kevin Nucum · © 2026
-        </footer>
+            Designed & built by Kevin Nucum · © 2026
+          </footer>
+        </div>
       </div>
     </>
   )
