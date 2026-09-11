@@ -280,7 +280,7 @@ function App() {
             <a href="mailto:kjnucum@gmail.com" className="op-btn">
               kjnucum@gmail.com
             </a>
-            <a href="https://github.com/kevinnucum">GitHub</a>
+            <a href="https://github.com/knuc18">GitHub</a>
             <a href="https://www.linkedin.com/in/kevin-nucum">LinkedIn</a>
           </div>
         </section>
