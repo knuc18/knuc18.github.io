@@ -11,10 +11,14 @@ const NAV_LINKS = [
   ['Contact', '#contact'],
 ] as const
 
+// Every figure here must be defensible from the Experience section below.
+// "3,000" is the Client Monitoring Database user count; it was the strongest
+// number on the page and was buried in body copy, while the slot it replaced
+// ("Platforms Mastered") was self-assessed and proved nothing to a client.
 const STATS = [
   ['14+', 'Years Shipping'],
   ['5', 'Global Companies'],
-  ['3', 'Platforms Mastered'],
+  ['3,000', 'Users On One Build'],
   ['2', 'Microsoft Certs'],
 ] as const
 
@@ -141,7 +145,7 @@ function App() {
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: 18, flex: 'none' }}>
           <span className="op-badge" style={{ whiteSpace: 'nowrap', flex: 'none' }}>
-            Open to work
+            Available for projects
           </span>
         </div>
       </div>
@@ -152,10 +156,11 @@ function App() {
           Kevin Nucum
         </h1>
         <span className="op-accent" style={{ fontSize: 'var(--fs-accent-word)' }}>
-          Vibe Coder
+          Automation Architect
         </span>
+        {/* Tags name what a client can buy, not job titles a recruiter scans. */}
         <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', margin: '18px 0' }}>
-          {['Software Developer', 'AI Automation Builder', 'Technical Architect', 'Engineering Lead'].map((r) => (
+          {['Process Automation', 'Enterprise Web Apps', 'AI Workflows', 'Systems Architecture'].map((r) => (
             <span key={r} className="op-tag">
               {r}
             </span>
@@ -166,12 +171,14 @@ function App() {
           platforms and AI-powered workflows across finance, consulting and global teams — with OutSystems, Azure,
           Power Platform, and AI-assisted engineering.
         </p>
+        {/* One primary action. The solid button is the conversion path; the
+            ghost button is supporting evidence, not a competing choice. */}
         <div style={{ display: 'flex', gap: 16, marginBottom: 56 }}>
-          <a href="#projects" className="op-btn">
-            View Projects
+          <a href="#contact" className="op-btn">
+            Start a project
           </a>
-          <a href="mailto:kjnucum@gmail.com" className="op-btn ghost">
-            Get In Touch
+          <a href="#projects" className="op-btn ghost">
+            See client work
           </a>
         </div>
 
@@ -275,7 +282,8 @@ function App() {
             Let's build something.
           </h2>
           <p className="op-body" style={{ maxWidth: 560, marginBottom: 24 }}>
-            Open to consulting, architecture and AI-automation work — for recruiters and clients alike.
+            Tell me what you are trying to build and what is in the way. If I am not the
+            right person for it, I will say so and point you somewhere better.
           </p>
           <ContactForm />
 
@@ -299,6 +307,20 @@ function App() {
               LinkedIn
             </a>
           </div>
+
+          {/* Recruiters are a real but secondary audience: given a path, not a
+              competing call to action. Deliberately quiet and last. */}
+          <p style={{ color: 'var(--text-muted)', fontSize: 14, marginTop: 24 }}>
+            Recruiting for a role rather than a project?{' '}
+            <a
+              href="https://www.linkedin.com/in/kevin-nucum"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Full background on LinkedIn
+            </a>
+            .
+          </p>
         </section>
 
         <footer
