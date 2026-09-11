@@ -3,7 +3,7 @@ import { useState } from 'react'
 /**
  * Set this to your Formspree form URL (https://formspree.io -> new form -> copy the
  * endpoint). Until it is set, the form stays disabled and shows the mailto instead,
- * so a half-configured form can never silently swallow an enquiry.
+ * so a half-configured form can never silently swallow an inquiry.
  */
 const FORM_ENDPOINT = 'https://formspree.io/f/mkjnejkb'
 
@@ -18,7 +18,7 @@ const EMAIL = 'kjnucum@gmail.com'
  *   form-start  -> someone began typing
  *   form-sent   -> it reached Formspree
  *   form-failed -> it did not (tells you the form is broken before a lost
- *                  enquiry does)
+ *                  inquiry does)
  */
 function track(name: string) {
   try {
@@ -91,7 +91,7 @@ export function ContactForm() {
       track('form-sent')
     } catch {
       // Deliberately keep every value on failure — retyping is how a ready
-      // enquiry gets abandoned. The mailto fallback shows alongside the error.
+      // inquiry gets abandoned. The mailto fallback shows alongside the error.
       setStatus('error')
       track('form-failed')
     }
@@ -164,7 +164,7 @@ export function ContactForm() {
 
         <div style={{ display: 'flex', gap: 20, flexWrap: 'wrap', alignItems: 'center' }}>
           <button type="submit" className="op-btn" disabled={status === 'sending'}>
-            {status === 'sending' ? 'Sending...' : 'Send enquiry'}
+            {status === 'sending' ? 'Sending...' : 'Send inquiry'}
           </button>
           <a href={`mailto:${EMAIL}`} style={{ fontSize: 15 }}>
             or email {EMAIL}
