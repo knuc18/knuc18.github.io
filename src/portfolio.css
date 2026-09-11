@@ -749,3 +749,80 @@ a:focus-visible{
   .op-btn,.op-icon-btn,.op-input{transition:none}
   .op-btn:hover,.op-icon-btn:hover{transform:none}
 }
+
+/* ---------------------------------------------------------------
+   Hero band.
+
+   The hex effect used to wrap the whole document, so every section
+   was captured into the canvas and re-rendered through the shader's
+   tilted camera. It now lives only here, behind the hero text, and
+   the rest of the page is plain DOM on the document scroller.
+   --------------------------------------------------------------- */
+
+:root{
+  /* Only feeds the hero's min-height, so an approximate nav height is
+     fine — it decides how tall a decorative band is, nothing that
+     affects layout correctness. */
+  --nav-h:73px;
+}
+
+.hero{position:relative;isolation:isolate}
+
+.hero-fx{
+  width:100%;
+  background:var(--surface-page);
+  /* An explicit min-height, not content height: where html-in-canvas is
+     supported the hero content lives inside an absolutely positioned
+     <canvas>, leaving the wrapper with no in-flow child to size against. */
+  min-height:calc(100vh - var(--nav-h));
+  min-height:calc(100svh - var(--nav-h));
+}
+
+/* HexFloat paints its output canvas after the content, which would stack
+   the hex layer over the headline. Only the DOM fallback path renders a
+   direct child <div>, so this lifts the text above the effect there and is
+   inert in the html-in-canvas path, where there is no such child. */
+.hero-fx > canvas{z-index:0}
+.hero-fx > div{z-index:1}
+
+/* .hero-inner centres, .hero-copy holds the content. The split is deliberate:
+   centring the copy directly would make every heading and paragraph a flex
+   item, which blockifies the inline spans and drops normal block layout.
+   The min-height is repeated from .hero-fx so the copy centres against the
+   band's real height rather than its own. */
+.hero-inner{
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  min-height:calc(100vh - var(--nav-h));
+  min-height:calc(100svh - var(--nav-h));
+  padding:clamp(48px,8vh,96px) 44px;
+}
+
+.hero-copy{
+  width:100%;
+  max-width:1100px;
+  margin:0 auto;
+}
+
+/* Stopping the effect dead at the hero's edge reads as a clipped canvas;
+   fading it into the page background hides the seam. */
+.hero::after{
+  content:"";
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  height:160px;
+  background:linear-gradient(to bottom,transparent,var(--surface-page));
+  pointer-events:none;
+  z-index:2;
+}
+
+@media (max-width:640px){
+  /* The nav wraps to a second row at this width. */
+  :root{--nav-h:150px}
+  .hero-fx{min-height:560px}
+  .hero-inner{min-height:560px;padding:40px 20px}
+  .hero::after{height:110px}
+}

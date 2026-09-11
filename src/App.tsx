@@ -108,22 +108,7 @@ const CERTS = [
 
 function App() {
   return (
-    <HexFloat
-      size={150}
-      tilt={10}
-      perspective={0.25}
-      float={0.15}
-      shine={0.5}
-      radius={280}
-      flow={1.2}
-      swirl={5}
-      trail={0.4}
-      bloom={0.25}
-      grain={0.4}
-      iridescence={0.3}
-      gapColor="auto"
-      style={{ height: '100vh', width: '100%', background: 'var(--surface-page)' }}
-    >
+    <>
       <div className="site-nav">
         <span
           style={{
@@ -150,38 +135,77 @@ function App() {
         </div>
       </div>
 
-      <div className="page-content">
-        <span className="op-kicker">Software Developer · AI Automation · Consulting</span>
-        <h1 className="op-display" style={{ margin: '16px 0 8px' }}>
-          Kevin Nucum
-        </h1>
-        <span className="op-accent" style={{ fontSize: 'var(--fs-accent-word)' }}>
-          Automation Architect
-        </span>
-        {/* Tags name what a client can buy, not job titles a recruiter scans. */}
-        <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', margin: '18px 0' }}>
-          {['Process Automation', 'Enterprise Web Apps', 'AI Workflows', 'Systems Architecture'].map((r) => (
-            <span key={r} className="op-tag">
-              {r}
-            </span>
-          ))}
-        </div>
-        <p className="op-body" style={{ maxWidth: 680, margin: '18px 0 32px' }}>
-          I turn messy business processes into scalable systems. 14+ years building enterprise apps, automation
-          platforms and AI-powered workflows across finance, consulting and global teams — with OutSystems, Azure,
-          Power Platform, and AI-assisted engineering.
-        </p>
-        {/* One primary action. The solid button is the conversion path; the
-            ghost button is supporting evidence, not a competing choice. */}
-        <div style={{ display: 'flex', gap: 16, marginBottom: 56 }}>
-          <a href="#contact" className="op-btn">
-            Start a project
-          </a>
-          <a href="#projects" className="op-btn ghost">
-            See client work
-          </a>
-        </div>
+      {/* The hex effect is decorative and belongs to the hero alone. It used to
+          wrap the whole document, so every section was captured into the canvas
+          and re-rendered through the shader's tilted camera — the lean applied
+          to the page itself, not just to a backdrop. It is now a background
+          layer sized to the hero band, and everything below it is plain, flat
+          DOM on the document scroller.
 
+          tilt={0} is what removes the lean. perspective stays non-zero: with no
+          tilt it only sets camera distance, so the tile walls still catch light
+          near the edges without rotating anything.
+
+          #about was in the nav but had no target anywhere on the page. The hero
+          is what that link means, so it carries the id. */}
+      <section className="hero" id="about">
+        <HexFloat
+          size={150}
+          tilt={0}
+          perspective={0.25}
+          float={0.15}
+          shine={0.5}
+          radius={280}
+          flow={1.2}
+          swirl={5}
+          trail={0.4}
+          bloom={0.25}
+          grain={0.4}
+          iridescence={0.3}
+          gapColor="auto"
+          className="hero-fx"
+        >
+          <div className="hero-inner">
+            <div className="hero-copy">
+              <span className="op-kicker">Software Developer · AI Automation · Consulting</span>
+              <h1 className="op-display" style={{ margin: '16px 0 8px' }}>
+                Kevin Nucum
+              </h1>
+              <span className="op-accent" style={{ fontSize: 'var(--fs-accent-word)' }}>
+                Automation Architect
+              </span>
+              {/* Tags name what a client can buy, not job titles a recruiter scans. */}
+              <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', margin: '18px 0' }}>
+                {['Process Automation', 'Enterprise Web Apps', 'AI Workflows', 'Systems Architecture'].map((r) => (
+                  <span key={r} className="op-tag">
+                    {r}
+                  </span>
+                ))}
+              </div>
+              <p className="op-body" style={{ maxWidth: 680, margin: '18px 0 32px' }}>
+                I turn messy business processes into scalable systems. 14+ years building enterprise apps, automation
+                platforms and AI-powered workflows across finance, consulting and global teams — with OutSystems, Azure,
+                Power Platform, and AI-assisted engineering.
+              </p>
+              {/* One primary action. The solid button is the conversion path; the
+                  ghost button is supporting evidence, not a competing choice. */}
+              <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
+                <a href="#contact" className="op-btn">
+                  Start a project
+                </a>
+                <a href="#projects" className="op-btn ghost">
+                  See client work
+                </a>
+              </div>
+            </div>
+          </div>
+        </HexFloat>
+      </section>
+
+      <div className="page-content">
+        {/* The stats sit below the hero rather than inside it: the hero is a
+            fixed-height band, and stacking the grid in there pushed the copy
+            past the fold on short screens. */}
         <div className="grid-4" style={{ marginBottom: 96 }}>
           {STATS.map(([num, lbl]) => (
             <div key={lbl} className="op-stat">
@@ -334,7 +358,7 @@ function App() {
           Designed & built by Kevin Nucum · © 2026
         </footer>
       </div>
-    </HexFloat>
+    </>
   )
 }
 
