@@ -9,6 +9,27 @@ const FORM_ENDPOINT = 'https://formspree.io/f/mkjnejkb'
 
 const EMAIL = 'kjnucum@gmail.com'
 
+/**
+ * Fire a GoatCounter event. Wrapped because the script is blocked by most
+ * adblockers and simply absent until the site code is configured — analytics
+ * must never be able to break the form it is measuring.
+ *
+ * Three events give the only funnel that matters here:
+ *   form-start  -> someone began typing
+ *   form-sent   -> it reached Formspree
+ *   form-failed -> it did not (tells you the form is broken before a lost
+ *                  enquiry does)
+ */
+function track(name: string) {
+  try {
+    const gc = (window as unknown as { goatcounter?: { count?: (o: object) => void } })
+      .goatcounter
+    gc?.count?.({ path: name, title: name, event: true })
+  } catch {
+    /* analytics is never worth an exception */
+  }
+}
+
 type Status = 'idle' | 'sending' | 'sent' | 'error'
 type Errors = Partial<Record<'name' | 'email' | 'message', string>>
 
@@ -33,9 +54,15 @@ export function ContactForm() {
   // Bots fill every field they find; humans never see this one.
   const [honeypot, setHoneypot] = useState('')
 
+  const [started, setStarted] = useState(false)
+
   const set = (field: keyof typeof values) => (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
+    if (!started) {
+      setStarted(true)
+      track('form-start')
+    }
     setValues((v) => ({ ...v, [field]: e.target.value }))
     // Clear a field's error as soon as the user starts fixing it.
     if (errors[field]) setErrors((prev) => ({ ...prev, [field]: undefined }))
@@ -61,10 +88,12 @@ export function ContactForm() {
       })
       if (!res.ok) throw new Error(String(res.status))
       setStatus('sent')
+      track('form-sent')
     } catch {
       // Deliberately keep every value on failure — retyping is how a ready
       // enquiry gets abandoned. The mailto fallback shows alongside the error.
       setStatus('error')
+      track('form-failed')
     }
   }
 
