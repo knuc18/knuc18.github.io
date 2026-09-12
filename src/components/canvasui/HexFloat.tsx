@@ -43,6 +43,21 @@ export interface HexFloatOptions {
   grain?: number;
   /** Seam color as [r, g, b] in 0-1 range, or "auto" to derive a dark seam from the page background. */
   gapColor?: [number, number, number] | "auto";
+  /**
+   * Render as a pure background layer: never capture the children into the
+   * canvas, even where html-in-canvas is supported.
+   *
+   * Without this the effect samples its own children and re-renders them as
+   * the faces of the tiles, so any text inside it is sliced by the lattice and
+   * shifted by the tiles' motion. That is the point of the effect when the
+   * content *is* the subject; it is not what you want behind a headline that
+   * has to stay readable. In decorative mode the children stay untouched DOM
+   * and the shader draws only its translucent tile relief, which is the same
+   * thing every browser without html-in-canvas already renders.
+   *
+   * Read once when the instance is created; changing it later has no effect.
+   */
+  decorative?: boolean;
 }
 
 export interface HexFloatElements {
@@ -81,6 +96,7 @@ const DEFAULTS: Required<HexFloatOptions> = {
   bloom: 0,
   grain: 0.8,
   gapColor: "auto",
+  decorative: false,
 };
 
 type PaintableCanvas = HTMLCanvasElement & {
@@ -658,6 +674,7 @@ export function createHexFloat(
   const sourceCtx = source.getContext("2d") as ElementImageContext | null;
   const paintable = source as PaintableCanvas;
   const htmlInCanvas = Boolean(
+    !config.decorative &&
     sourceCtx &&
     typeof sourceCtx.drawElementImage === "function" &&
     typeof paintable.requestPaint === "function",
@@ -1657,7 +1674,10 @@ export function HexFloat({
     supportsHtmlInCanvas,
     () => false,
   );
-  const native = supported && !failed;
+  // Decorative mode keeps children in the real DOM in every browser, so the
+  // two rendering paths collapse to one and the hero cannot look different on
+  // a browser that happens to ship html-in-canvas.
+  const native = supported && !failed && !options.decorative;
 
   useEffect(() => {
     const source = sourceRef.current;

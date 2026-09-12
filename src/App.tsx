@@ -147,6 +147,12 @@ function App() {
           tilt it only sets camera distance, so the tile walls still catch light
           near the edges without rotating anything.
 
+          decorative keeps the copy out of the canvas entirely. Left to itself
+          the effect captures its own children and redraws them as the faces of
+          the tiles, so on a browser with html-in-canvas the headline would be
+          sliced by the lattice and shifted by the tiles' motion. The flag makes
+          the layer purely a backdrop in every browser.
+
           #about was in the nav but had no target anywhere on the page. The hero
           is what that link means, so it carries the id. */}
       <section className="hero" id="about">
@@ -164,6 +170,7 @@ function App() {
           grain={0.4}
           iridescence={0.3}
           gapColor="auto"
+          decorative
           className="hero-fx"
         >
           <div className="hero-inner">
