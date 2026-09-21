@@ -343,7 +343,13 @@ function App() {
                   </h3>
                   <span style={{ color: 'var(--text-muted)', fontSize: 13 }}>{g.note}</span>
                 </div>
-                <div className={g.items.length === 2 ? 'grid-2' : 'grid-3'}>
+                {/* Always 3 columns, even for a 2-card group. Sizing each grid
+                    to its own group made the two Microsoft cards noticeably
+                    wider than the three Anthropic ones, so a card's width
+                    encoded nothing but how many siblings it happened to have.
+                    A short last row is the cheaper cost: every card is now the
+                    same size in every group. */}
+                <div className="grid-3">
                   {g.items.map(([title, sub]) => (
                     <div key={title} className="op-card">
                       <h3 className="op-heading" style={{ fontSize: 18, marginBottom: 6 }}>
