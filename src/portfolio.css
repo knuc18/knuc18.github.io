@@ -333,6 +333,11 @@ html{scroll-behavior:smooth}[data-theme]{transition:background-color .2s var(--e
 .page-content{padding:64px 44px;max-width:1100px;margin:0 auto}
 .grid-4{display:grid;grid-template-columns:repeat(4, 1fr);gap:16px}
 .grid-2{display:grid;grid-template-columns:repeat(2, 1fr);gap:16px}
+/* Holds 3 columns all the way down to the phone breakpoint on purpose. The
+   900px step that .grid-4 uses would drop a 3-item group to 2 columns and
+   leave the third card orphaned on its own row, which is the exact thing the
+   grouped certs layout exists to avoid. */
+.grid-3{display:grid;grid-template-columns:repeat(3, 1fr);gap:16px}
 
 @media (max-width: 900px){
   .grid-4{grid-template-columns:repeat(2, 1fr)}
@@ -345,7 +350,7 @@ html{scroll-behavior:smooth}[data-theme]{transition:background-color .2s var(--e
   .site-nav{padding:16px 20px;flex-wrap:wrap;gap:12px}
   .nav-links{gap:16px;font-size:13px;width:100%;order:3}
   .page-content{padding:40px 20px}
-  .grid-4,.grid-2{grid-template-columns:1fr}
+  .grid-4,.grid-2,.grid-3{grid-template-columns:1fr}
 }
 
 /* ---------------------------------------------------------------

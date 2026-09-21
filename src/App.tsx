@@ -16,11 +16,12 @@ const NAV_LINKS = [
 // "3,000" is the Client Monitoring Database user count; it was the strongest
 // number on the page and was buried in body copy, while the slot it replaced
 // ("Platforms Mastered") was self-assessed and proved nothing to a client.
-const STATS = [
+// The certification count is appended below, derived from CERT_GROUPS rather
+// than typed, so the number and the cards it summarises cannot disagree.
+const BASE_STATS = [
   ['14+', 'Years Shipping'],
   ['5', 'Global Companies'],
   ['3,000', 'Users On One Build'],
-  ['2', 'Microsoft Certs'],
 ] as const
 
 const EXPERIENCE = [
@@ -102,17 +103,39 @@ const SKILLS = [
   ['Leadership', ['Architecture', 'Project Management', 'Agile · Scrum · RAD']],
 ] as const
 
-// Newest first: the Anthropic credentials are the ones that back the AI
-// Workflows claim in the hero, so they should not sit under older fundamentals
-// certs. Sub lines follow the existing shape — a short qualifier, not a raw
-// credential hash; the 32-char IDs live on LinkedIn where they are verifiable.
-const CERTS = [
-  ['Claude Academy: Claude Code in Action', 'Anthropic · Sep 2026'],
-  ['Claude Academy: AI Fluency for Builders', 'Anthropic · Sep 2026'],
-  ['Claude Academy: Claude Code 101', 'Anthropic · Sep 2026'],
-  ['Microsoft Certified: Power Platform Fundamentals', 'PL-900 · Microsoft'],
-  ['Microsoft Certified: Azure Fundamentals', 'AZ-900 · Microsoft'],
+// Grouped by issuer so the section reads as two credential tracks rather than
+// one flat list where an Anthropic cert and a Microsoft one look interchangeable.
+// Each group's card count drives its own grid, so no row ends with an orphan.
+// The sub line carries the qualifier that is actually useful per issuer: an exam
+// code for Microsoft, the issue date for Anthropic (which has no exam codes).
+const CERT_GROUPS = [
+  {
+    issuer: 'Anthropic',
+    note: 'Claude Academy · 2026',
+    items: [
+      ['Claude Code in Action', 'Issued Sep 2026'],
+      ['AI Fluency for Builders', 'Issued Sep 2026'],
+      ['Claude Code 101', 'Issued Sep 2026'],
+    ],
+  },
+  {
+    issuer: 'Microsoft',
+    note: 'Certified · Fundamentals',
+    items: [
+      ['Power Platform Fundamentals', 'PL-900'],
+      ['Azure Fundamentals', 'AZ-900'],
+    ],
+  },
 ] as const
+
+// Declared after CERT_GROUPS on purpose: reading it from inside the BASE_STATS
+// literal above would hit the temporal dead zone at module load.
+const CERT_COUNT = CERT_GROUPS.reduce((n, g) => n + g.items.length, 0)
+
+const STATS: readonly (readonly [string, string])[] = [
+  ...BASE_STATS,
+  [String(CERT_COUNT), 'Certifications'],
+]
 
 function App() {
   return (
@@ -303,13 +326,33 @@ function App() {
 
         <section id="certs" style={{ marginBottom: 96 }}>
           <span className="op-kicker">04 / Certifications</span>
-          <div className="grid-2" style={{ marginTop: 24 }}>
-            {CERTS.map(([title, sub]) => (
-              <div key={title} className="op-card">
-                <h3 className="op-heading" style={{ fontSize: 18, marginBottom: 6 }}>
-                  {title}
-                </h3>
-                <span style={{ color: 'var(--text-muted)', fontSize: 14 }}>{sub}</span>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 32, marginTop: 24 }}>
+            {CERT_GROUPS.map((g) => (
+              <div key={g.issuer}>
+                <div
+                  style={{
+                    display: 'flex',
+                    alignItems: 'baseline',
+                    gap: 12,
+                    flexWrap: 'wrap',
+                    marginBottom: 14,
+                  }}
+                >
+                  <h3 className="op-heading" style={{ fontSize: 18 }}>
+                    {g.issuer}
+                  </h3>
+                  <span style={{ color: 'var(--text-muted)', fontSize: 13 }}>{g.note}</span>
+                </div>
+                <div className={g.items.length === 2 ? 'grid-2' : 'grid-3'}>
+                  {g.items.map(([title, sub]) => (
+                    <div key={title} className="op-card">
+                      <h3 className="op-heading" style={{ fontSize: 18, marginBottom: 6 }}>
+                        {title}
+                      </h3>
+                      <span style={{ color: 'var(--text-muted)', fontSize: 14 }}>{sub}</span>
+                    </div>
+                  ))}
+                </div>
               </div>
             ))}
           </div>
