@@ -102,7 +102,14 @@ const SKILLS = [
   ['Leadership', ['Architecture', 'Project Management', 'Agile · Scrum · RAD']],
 ] as const
 
+// Newest first: the Anthropic credentials are the ones that back the AI
+// Workflows claim in the hero, so they should not sit under older fundamentals
+// certs. Sub lines follow the existing shape — a short qualifier, not a raw
+// credential hash; the 32-char IDs live on LinkedIn where they are verifiable.
 const CERTS = [
+  ['Claude Academy: Claude Code in Action', 'Anthropic · Sep 2026'],
+  ['Claude Academy: AI Fluency for Builders', 'Anthropic · Sep 2026'],
+  ['Claude Academy: Claude Code 101', 'Anthropic · Sep 2026'],
   ['Microsoft Certified: Power Platform Fundamentals', 'PL-900 · Microsoft'],
   ['Microsoft Certified: Azure Fundamentals', 'AZ-900 · Microsoft'],
 ] as const
