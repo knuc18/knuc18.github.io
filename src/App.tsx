@@ -96,6 +96,17 @@ const PROJECTS = [
   },
 ]
 
+// Personal build, not client work, so it sits above "Selected client work".
+// The MP4 is self-hosted from public/media: the source repo is private, so
+// its Release assets aren't reachable from a public page.
+const FEATURED_REEL = {
+  title: 'Court booking platform: 18-second reel',
+  body: 'Directed Claude Code to design, animate and score a motion reel for a self-service court booking platform I built. Code-driven animation, an original synthesized score, and the real booking flow and database guarantee on screen.',
+  src: '/media/pickleball-showreel.mp4',
+  poster: '/media/pickleball-showreel-poster.jpg',
+  tags: ['Claude Code', 'Next.js', 'Postgres', 'HyperFrames', 'GSAP'],
+}
+
 const SKILLS = [
   ['Low-Code', ['OutSystems', 'Power Apps', 'Power Automate']],
   ['Cloud & AI', ['Azure', 'Azure AI', 'OpenAI Codex', 'Claude Code']],
@@ -274,6 +285,37 @@ function App() {
 
         <section id="projects" style={{ marginBottom: 96 }}>
           <span className="op-kicker">02 / Projects</span>
+          <div className="op-card" style={{ margin: '16px 0 48px' }}>
+            <span className="op-kicker">Featured / Motion</span>
+            <h3 className="op-heading" style={{ margin: '8px 0 16px' }}>
+              {FEATURED_REEL.title}
+            </h3>
+            <video
+              src={FEATURED_REEL.src}
+              poster={FEATURED_REEL.poster}
+              aria-label={FEATURED_REEL.title}
+              controls
+              playsInline
+              preload="metadata"
+              style={{
+                display: 'block',
+                width: '100%',
+                aspectRatio: '16 / 9',
+                background: '#0a192f',
+                border: 'var(--border-w) solid var(--border-color)',
+              }}
+            />
+            <p className="op-body" style={{ margin: '16px 0 14px' }}>
+              {FEATURED_REEL.body}
+            </p>
+            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+              {FEATURED_REEL.tags.map((t) => (
+                <span key={t} className="op-tag accent">
+                  {t}
+                </span>
+              ))}
+            </div>
+          </div>
           <h2 className="op-heading" style={{ margin: '8px 0 24px' }}>
             Selected client work
           </h2>
