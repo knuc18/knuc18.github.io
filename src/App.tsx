@@ -230,7 +230,7 @@ function App() {
                 Kevin Nucum
               </h1>
               <span className="op-accent" style={{ fontSize: 'var(--fs-accent-word)' }}>
-                Automation Architect
+                AI Engineer
               </span>
               {/* Tags name what a client can buy, not job titles a recruiter scans. */}
               <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', margin: '18px 0' }}>
